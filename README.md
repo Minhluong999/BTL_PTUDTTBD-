@@ -1,5 +1,5 @@
-PHẦN 1: LÀM APP BẰNG MIT APP INVENTOR
-1.1. Tạo project MIT App Inventor
+## PHẦN 1: LÀM APP BẰNG MIT APP INVENTOR
+### 1.1. Tạo project MIT App Inventor
 
 Vào trang MIT App Inventor:
 ```
@@ -386,20 +386,22 @@ Quét QR code để chạy thử.
 <img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/0be8014c-4b2e-42b2-9f52-d5dd0e044480" />
 <img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/32d1debf-192e-434a-a56d-f5d6131d99dd" />
 
-## PHẦN 2: ANDROID STUDIO APP1 - SỬ DỤNG DỮ LIỆU TRONG ASSETS
-### 2.1. AndroidManifest.xml
+# PHẦN 2: ANDROID STUDIO APP1 - SỬ DỤNG DỮ LIỆU TRONG ASSETS
+
+## 2.1. AndroidManifest.xml
 
 AndroidManifest.xml là file cấu hình trung tâm của ứng dụng Android.
 
 Chức năng:
 
-+ Khai báo Activity.
-+ Khai báo quyền truy cập.
-+ Khai báo theme.
-+ Khai báo màn hình khởi động.
+- Khai báo Activity.
+- Khai báo quyền truy cập.
+- Khai báo theme.
+- Khai báo màn hình khởi động.
 
 Ví dụ:
-```
+
+```xml
 <activity
     android:name=".MainActivity"
     android:exported="true">
@@ -411,19 +413,19 @@ Ví dụ:
 
 </activity>
 ```
-Khai báo quyền
+
+### Khai báo quyền
 
 Ví dụ ứng dụng cần Internet:
-```
+
+```xml
 <uses-permission
     android:name="android.permission.INTERNET"/>
 ```
-Ý nghĩa:
 
-Cho phép ứng dụng truy cập Internet.
+### Check quyền bằng Java
 
-Check quyền bằng Java
-```
+```java
 if (checkSelfPermission(
         Manifest.permission.CAMERA)
         != PackageManager.PERMISSION_GRANTED) {
@@ -435,49 +437,55 @@ if (checkSelfPermission(
             100);
 }
 ```
+
 Ý nghĩa:
 
-+ `checkSelfPermission()` kiểm tra quyền.
-+ `requestPermissions()` yêu cầu người dùng cấp quyền.
-+ 
-<img width="1297" height="631" alt="image" src="https://github.com/user-attachments/assets/dc56517d-8758-4d32-afbf-faf0b72e54de" />
+- checkSelfPermission(): kiểm tra quyền.
+- requestPermissions(): yêu cầu người dùng cấp quyền.
 
-2.2. Vòng đời Activity
 
-Các hàm quan trọng:
+---
 
-Hàm	Ý nghĩa
-+ `onCreate()`	Tạo Activity
-+ `onStart()`	Bắt đầu hiển thị
-+ `onResume()`	Người dùng tương tác
-+ `onPause()`	Tạm dừng
-+ `onStop()`	Ẩn khỏi màn hình
-+ `onDestroy()`	Hủy Activity
-Vì sao Android tự sinh `onCreate()`?
+## 2.2. Vòng đời Activity
 
-`onCreate()` là điểm khởi tạo đầu tiên của Activity.
+| Hàm | Ý nghĩa |
+|------|----------|
+| onCreate() | Tạo Activity |
+| onStart() | Bắt đầu hiển thị |
+| onResume() | Người dùng tương tác |
+| onPause() | Tạm dừng |
+| onStop() | Ẩn khỏi màn hình |
+| onDestroy() | Hủy Activity |
 
-Ví dụ:
-```
+### Vì sao Android tự sinh onCreate()?
+
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 }
 ```
+
 Dùng để:
 
-+ Gắn giao diện XML.
-+ Khởi tạo View.
-+ Đọc dữ liệu ban đầu.
-2.3. Giao diện XML
+- Gắn giao diện XML.
+- Khởi tạo View.
+- Đọc dữ liệu ban đầu.
+
+---
+
+## 2.3. Giao diện XML
 
 Android mô tả giao diện bằng file XML trong:
-`
+
+```text
 res/layout
-`
-Ví dụ:
 ```
+
+Ví dụ:
+
+```xml
 <LinearLayout
     android:orientation="vertical">
 
@@ -486,195 +494,256 @@ Ví dụ:
     <Button/>
 
 </LinearLayout>
-LinearLayout
+```
+
+### LinearLayout
+
+```xml
 android:orientation="vertical"
 ```
+
 Các đối tượng nằm theo chiều dọc.
-```
+
+```xml
 android:orientation="horizontal"
 ```
+
 Các đối tượng nằm theo chiều ngang.
-```
-Gravity
+
+### Gravity
+
+```xml
 android:gravity="center"
 ```
+
 Căn giữa nội dung.
 
-<img width="1337" height="680" alt="image" src="https://github.com/user-attachments/assets/bb1b7f32-b383-4009-8929-61745bbce945" />
+   
+---
 
-2.4. Resource và Strings
+## 2.4. Resource và Strings
 
 Không nên hardcode:
-`
+
+```java
 txtTitle.setText("Hướng dẫn Java");
-`
-Nên lưu trong:
-`
-res/values/strings.xml
-`
-Ví dụ:
 ```
+
+Nên lưu trong:
+
+```text
+res/values/strings.xml
+```
+
+Ví dụ:
+
+```xml
 <string name="app_title">
     Hướng dẫn học Java cơ bản
 </string>
 ```
+
 Tham chiếu:
 
 XML:
-`
+
+```xml
 @string/app_title
-`
+```
+
 Java:
-`
-R.string.app_title`
-Ưu điểm
-+ Dễ sửa đổi.
-+ Hỗ trợ đa ngôn ngữ.
-+ Hỗ trợ Theme.
-+ Tránh lặp dữ liệu.
 
-Android tự động lấy resource phù hợp theo:
+```java
+R.string.app_title
+```
 
-+ Language
-+ Location
-+ Theme
+Ưu điểm:
+
+- Dễ sửa đổi.
+- Hỗ trợ đa ngôn ngữ.
+- Hỗ trợ Theme.
+- Tránh lặp dữ liệu.
+
+Android tự động lấy resource theo:
+
+- Language
+- Location
+- Theme
 
 Ví dụ:
-`
+
+```text
 values/
 values-en/
 values-night/
-`
-Nhờ đó cùng một ứng dụng có thể tự đổi ngôn ngữ và giao diện sáng/tối theo điện thoại người dùng.
-
-<img width="914" height="178" alt="image" src="https://github.com/user-attachments/assets/6d4f6b64-a592-4b9e-84f7-91c155f3bec0" />
-
-2.5. Code tương tác với Layout
-
-Ánh xạ View:
 ```
+
+---
+
+## 2.5. Code tương tác với Layout
+
+```java
 TextView txtContent =
         findViewById(R.id.txtContent);
 ```
+
 Hiển thị dữ liệu:
-```
+
+```java
 txtContent.setText(
         getString(R.string.app_title)
 );
 ```
-Sử dụng `getString()` thay vì text hardcode để hỗ trợ Language và Theme.
 
-2.6. Event (Sự kiện)
+Sử dụng getString() thay vì text hardcode để hỗ trợ Language và Theme.
 
-Ví dụ người dùng bấm Button.
-```
-Cách 1: setOnClickListener
+---
+
+## 2.6. Event (Sự kiện)
+
+### Cách 1: setOnClickListener
+
+```java
 btnReload.setOnClickListener(v -> {
     loadData();
-});```
-Cách 2: android:onClick
+});
+```
+
+### Cách 2: android:onClick
 
 XML:
-```
+
+```xml
 <Button
     android:onClick="reloadData"/>
 ```
+
 Java:
-```
+
+```java
 public void reloadData(View view){
     loadData();
 }
 ```
+
 Để xử lý event:
 
-+ Layout cần khai báo Button.
-+ Java viết hàm xử lý tương ứng.
-2.7. Sử dụng Assets
+- Layout khai báo Button.
+- Java viết hàm xử lý tương ứng.
+
+---
+
+## 2.7. Sử dụng Assets
 
 Assets là thư mục chứa các file đi kèm ứng dụng.
 
 Ví dụ:
 
+```text
 assets/
 ├── lessons.json
 ├── guide.html
 ├── image.png
+```
 
 Khi build APK:
 
+```text
 Assets
 ↓
 Đóng gói vào APK
 ↓
 Có thể sử dụng Offline
-Truy cập file Assets
+```
+
+### Truy cập file Assets
+
+```java
 InputStream inputStream =
         getAssets().open("lessons.json");
-
-Ý nghĩa:
-
-`getAssets()` lấy AssetManager.
-`open()` mở file trong Assets.
-Lợi ích
-+ Không cần Internet.
-+ Dữ liệu luôn có sẵn.
-+ Truy cập nhanh.
-<img width="479" height="625" alt="image" src="https://github.com/user-attachments/assets/41ab484c-9a30-4664-a6bf-bec35039e13b" />
-
-2.8. APP1: Hướng dẫn học Java Offline
-Ý tưởng
-
-Xây dựng ứng dụng hướng dẫn học Java cơ bản.
-
-Dữ liệu lưu trong:
-`
-assets/lessons.json
-`
-Định dạng:
 ```
+
+Lợi ích:
+
+- Không cần Internet.
+- Dữ liệu luôn có sẵn.
+- Truy cập nhanh.
+
+**CHÈN ẢNH: Thư mục Assets**
+
+---
+
+## 2.8. APP1 – Java Learning Offline
+
+### Ý tưởng
+
+Xây dựng ứng dụng học Java Offline sử dụng dữ liệu chuẩn bị trước trong Assets.
+
+Các chức năng:
+
+- Hiển thị danh sách bài học.
+- Tìm kiếm bài học.
+- Xem chi tiết bài học.
+- Đánh dấu bài đã học.
+- Lưu tiến độ học bằng SharedPreferences.
+- Hoạt động hoàn toàn Offline.
+
+### Dữ liệu sử dụng
+
+File:
+
+```text
+assets/lessons.json
+```
+
+Định dạng:
+
+```json
 [
   {
     "title":"Bài 1",
+    "level":"Cơ bản",
     "content":"..."
   }
 ]
+```
 
-Đặc thù dữ liệu
+### Đặc thù dữ liệu
 
-Dữ liệu dạng:
-
+```text
 JSON Array
     └── JSON Object
+```
 
 Mỗi bài học gồm:
 
-title
-content
-Thuật toán xử lý
+- title
+- level
+- content
+
+### Thuật toán xử lý
+
+```text
 Đọc lessons.json
 ↓
 Chuyển thành JSONArray
 ↓
 Duyệt từng bài học
 ↓
-Lấy title và content
+Tạo danh sách Lesson
 ↓
-Ghép nội dung hiển thị
+Hiển thị lên ListView
 ↓
-Hiển thị lên TextView
-Đối tượng hiển thị
+Hiển thị chi tiết bằng TextView
+```
 
-Sử dụng:
+### Đối tượng hiển thị
 
-TextView
-
-để hiển thị nội dung.
-
-Do dữ liệu dài nên đặt trong:
-
-ScrollView
-
-để hỗ trợ cuộn.
+- ListView: hiển thị danh sách bài học.
+- TextView: hiển thị nội dung.
+- EditText: tìm kiếm.
+- ScrollView: hỗ trợ cuộn.
+- SharedPreferences: lưu trạng thái đã học.
 
 <img width="1347" height="709" alt="image" src="https://github.com/user-attachments/assets/d7800cdd-0154-460e-909b-c8d001dfe098" />
 
@@ -682,6 +751,8 @@ Kết quả chạy trên điện thoại
 
 <img width="320" height="595" alt="image" src="https://github.com/user-attachments/assets/fb5046ba-f3d7-4db5-9d10-f6215c9cc7ad" />
 
-<img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/771befc1-a094-4cce-a165-e0d96381f951" />
+<img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/d9a0f53c-2b41-45da-8977-d7e6be86e49a" />
+
+<img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/d1a114ab-a307-489a-9ada-3bc01f7b9f67" />
 
 
