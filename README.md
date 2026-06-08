@@ -29,3 +29,78 @@ Label	lblTitle	Hiển thị tiêu đề
 Label	lblInfo	Hiển thị thông tin cá nhân
 Button	btnGoSolve	Sang màn hình giải toán
 Button	btnGoWeb	Sang màn hình WebView
+
+Kéo thả giao diện Screen1
+
+Trong MIT App Inventor, vào tab Designer.
+
+Từ bên trái `Palette`, kéo vào màn hình:
+```
+Layout → VerticalArrangement
+```
+Đổi thuộc tính cho VerticalArrangement:
+
+```
+Width: Fill parent
+Height: Fill parent
+AlignHorizontal: Center
+AlignVertical: Center
+BackgroundColor: White
+```
+Sau đó kéo các thành phần sau vào VerticalArrangement:
+```
+User Interface → Label
+User Interface → Label
+User Interface → Button
+User Interface → Button
+```
+Đổi tên component
+
+Ở khung Components, đổi tên:
+```
+Label1 → lblTitle
+Label2 → lblInfo
+Button1 → btnGoSolve
+Button2 → btnGoWeb
+```
+Cách đổi tên:
+
+Chọn component → Rename → nhập tên mới
+Chỉnh thuộc tính Screen1
+lblTitle
+```
+Text: BÀI TẬP LỚN MOBILE
+FontSize: 22
+FontBold: true
+TextAlignment: Center
+Width: Fill parent
+```
+lblInfo
+```
+Text:
+Họ tên: Lăng Nguyễn Minh Lượng
+Mã sinh viên: K225480106044
+Lớp: K58KMT
+Môn học: Phát triển ứng dụng trên thiết bị di động - TEE0419
+```
+```
+FontSize: 16
+TextAlignment: Center
+Width: Fill parent
+```
+btnGoSolve
+```
+Text: Sang màn hình giải toán
+Width: Fill parent
+Height: Automatic
+FontSize: 16
+```
+btnGoWeb
+```
+Text: Sang màn hình WebView
+Width: Fill parent
+Height: Automatic
+FontSize: 16
+```
+
+<img width="1365" height="768" alt="image" src="https://github.com/user-attachments/assets/dd43b381-2b57-4c7c-b048-c1462fbfc43a" />
