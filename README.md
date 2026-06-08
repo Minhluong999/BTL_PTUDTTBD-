@@ -238,4 +238,65 @@ TextAlignment: Center
 btnBack
 ```
 Text: Quay lại màn hình chính
-Width: Fill parent```
+Width: Fill parent
+```
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/4794a2a2-0f13-4fd8-98dc-1bbbffb2bc91" />
+
+1.6. Block xử lý bài toán Screen2
+
+Vào tab Blocks của Screen2.
+
+Ta cần dùng:
+```
+Variables
+Math
+Control
+Text
+```
+Tạo block cho nút btnSolve
+
+Logic mô tả bằng lời:
+```
+Khi bấm nút Giải:
+- Lấy dữ liệu từ txtA và txtB
+- Chuyển sang số
+- Kiểm tra các trường hợp
+- Gán kết quả vào lblResult.Text
+```
+Block tương đương:
+```
+when btnSolve.Click
+do
+    if txtA.Text = "" or txtB.Text = ""
+        set lblResult.Text to "Vui lòng nhập đầy đủ a và b"
+    else
+        initialize local a to txtA.Text
+        initialize local b to txtB.Text
+
+        if a = 0 and b = 0
+            set lblResult.Text to "Phương trình có vô số nghiệm"
+        else if a = 0 and b ≠ 0
+            set lblResult.Text to "Phương trình vô nghiệm"
+        else
+            set lblResult.Text to join "Phương trình có nghiệm x = " (-b / a)
+```
+Trong MIT App Inventor, TextBox trả về kiểu text, nhưng khi dùng với block toán học, App Inventor có thể tự ép kiểu nếu nội dung là số.
+
+Block nút quay lại
+```
+when btnBack.Click
+do close screen
+```
+Hoặc:
+```
+when btnBack.Click
+do open another screen screenName "Screen1"
+```
+Nên dùng:
+```
+close screen
+```
+vì nó quay lại màn hình trước đó gọn hơn.
+
+<img width="816" height="432" alt="image" src="https://github.com/user-attachments/assets/fabab41b-d7f3-4972-ad1f-091f341bf535" />
+
