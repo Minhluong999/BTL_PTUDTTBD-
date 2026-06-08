@@ -292,11 +292,6 @@ Hoặc:
 when btnBack.Click
 do open another screen screenName "Screen1"
 ```
-Nên dùng:
-```
-close screen
-```
-vì nó quay lại màn hình trước đó gọn hơn.
 
-<img width="816" height="432" alt="image" src="https://github.com/user-attachments/assets/fabab41b-d7f3-4972-ad1f-091f341bf535" />
+<img width="882" height="436" alt="image" src="https://github.com/user-attachments/assets/ea9a3a79-11e3-4f5d-900c-2963451ccdda" />
 
