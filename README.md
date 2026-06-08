@@ -638,7 +638,7 @@ assets/lessons.json
     "content":"..."
   }
 ]
-```
+
 Đặc thù dữ liệu
 
 Dữ liệu dạng:
