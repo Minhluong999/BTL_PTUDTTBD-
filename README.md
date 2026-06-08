@@ -386,118 +386,76 @@ Quét QR code để chạy thử.
 <img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/0be8014c-4b2e-42b2-9f52-d5dd0e044480" />
 <img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/32d1debf-192e-434a-a56d-f5d6131d99dd" />
 
-## PHẦN 2: ANDROID STUDIO APP1 DÙNG ASSETS
-### 2.1. Ý tưởng APP1
+## PHẦN 2: ANDROID STUDIO APP1 - SỬ DỤNG DỮ LIỆU TRONG ASSETS
+### 2.1. AndroidManifest.xml
 
-Ta làm app tên:
-`
-JavaGuideAssets
-`
+AndroidManifest.xml là file cấu hình trung tâm của ứng dụng Android.
+
 Chức năng:
 
-App hướng dẫn học Java cơ bản offline
++ Khai báo Activity.
++ Khai báo quyền truy cập.
++ Khai báo theme.
++ Khai báo màn hình khởi động.
 
-Dữ liệu được chuẩn bị trước trong thư mục:
-`
-app/src/main/assets/
-`
-Dữ liệu dạng JSON:
-`
-lessons.json
-`
-App đọc file JSON từ Assets, xử lý dữ liệu và hiển thị lên màn hình.
-
-Android xem resources là các file/tài nguyên tĩnh dùng bởi code như chuỗi giao diện, bitmap, layout, animation…; còn thư mục Assets phù hợp khi muốn đóng gói file dữ liệu nguyên bản và tự đọc bằng code.
-### 2.2. Tạo project Android Studio
-
-Mở Android Studio:
-`
-New Project
-`
-Chọn:
-`
-Empty Views Activity
-`
-Không chọn Jetpack Compose để dễ làm bằng XML + Java.
-
-Cấu hình:
+Ví dụ:
 ```
-Name: JavaGuideAssets
-Language: Java
-Minimum SDK: API 23 hoặc cao hơn
+<activity
+    android:name=".MainActivity"
+    android:exported="true">
+
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+    </intent-filter>
+
+</activity>
 ```
-### 2.3. Cấu trúc project cần có
+Khai báo quyền
 
-Sau khi làm xong, project nên có cấu trúc:
+Ví dụ ứng dụng cần Internet:
 ```
-JavaGuideAssets/
-└── app/
-    └── src/
-        └── main/
-            ├── AndroidManifest.xml
-            ├── assets/
-            │   └── lessons.json
-            ├── java/
-            │   └── com/example/javaguideassets/
-            │       └── MainActivity.java
-            └── res/
-                ├── layout/
-                │   └── activity_main.xml
-                └── values/
-                    └── strings.xml
+<uses-permission
+    android:name="android.permission.INTERNET"/>
 ```
-2.4. AndroidManifest.xml mô tả gì?
+Ý nghĩa:
 
-File:
+Cho phép ứng dụng truy cập Internet.
+
+Check quyền bằng Java
 ```
-app/src/main/AndroidManifest.xml
+if (checkSelfPermission(
+        Manifest.permission.CAMERA)
+        != PackageManager.PERMISSION_GRANTED) {
+
+    requestPermissions(
+            new String[]{
+                    Manifest.permission.CAMERA
+            },
+            100);
+}
 ```
-là file cấu hình chính của ứng dụng Android. Nó mô tả các thành phần của app như Activity, service, receiver, tên app, theme, icon, quyền truy cập và Activity khởi động đầu tiên. Theo tài liệu Android, manifest dùng để khai báo thông tin thiết yếu của app cho hệ thống Android biết trước khi chạy app.
-Ví dụ `AndroidManifest.xml` cho APP1:
-```
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+Ý nghĩa:
 
-    <application
-        android:allowBackup="true"
-        android:label="@string/app_name"
-        android:theme="@style/Theme.JavaGuideAssets"
-        android:supportsRtl="true">
++ `checkSelfPermission()` kiểm tra quyền.
++ `requestPermissions()` yêu cầu người dùng cấp quyền.
++ 
+<img width="1297" height="631" alt="image" src="https://github.com/user-attachments/assets/dc56517d-8758-4d32-afbf-faf0b72e54de" />
 
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+2.2. Vòng đời Activity
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+Các hàm quan trọng:
 
-        </activity>
+Hàm	Ý nghĩa
++ `onCreate()`	Tạo Activity
++ `onStart()`	Bắt đầu hiển thị
++ `onResume()`	Người dùng tương tác
++ `onPause()`	Tạm dừng
++ `onStop()`	Ẩn khỏi màn hình
++ `onDestroy()`	Hủy Activity
+Vì sao Android tự sinh `onCreate()`?
 
-    </application>
-
-</manifest>
-```
-Trong APP1 này không cần Internet, nên chưa cần khai báo quyền.
-
-Nếu app cần Internet, ví dụ gọi API hoặc WebView, khai báo thêm:
-```
-<uses-permission android:name="android.permission.INTERNET" />
-```
-Thẻ `<uses-permission>` dùng để khai báo quyền hệ thống mà app cần sử dụng.
-2.5. Vòng đời Activity và vì sao có `onCreate()`
-Một màn hình trong Android thường là một `Activity`. `Activity` có vòng đời gồm các hàm chính:
-| Hàm           | Ý nghĩa                     |
-| ------------- | --------------------------- |
-| `onCreate()`  | Activity được tạo lần đầu   |
-| `onStart()`   | Activity bắt đầu hiển thị   |
-| `onResume()`  | Activity sẵn sàng tương tác |
-| `onPause()`   | Activity tạm dừng           |
-| `onStop()`    | Activity không còn hiển thị |
-| `onDestroy()` | Activity bị hủy             |
-
-Android gọi onCreate() khi hệ thống tạo Activity lần đầu. Đây là nơi thực hiện logic khởi tạo ban đầu, ví dụ gắn layout XML bằng setContentView(), ánh xạ TextView, Button, đọc dữ liệu ban đầu.
+`onCreate()` là điểm khởi tạo đầu tiên của Activity.
 
 Ví dụ:
 ```
@@ -507,49 +465,223 @@ protected void onCreate(Bundle savedInstanceState) {
     setContentView(R.layout.activity_main);
 }
 ```
-2.6. Tạo thư mục Assets
+Dùng để:
 
-Trong Android Studio, mở cây thư mục:
-```
-app → src → main
-```
-Chuột phải vào main:
-`
-New → Directory
-`
-Đặt tên:
-`
-assets
-`
-Sau đó tạo file:
-`
-lessons.json
-`
-Đường dẫn đầy đủ:
-`
-app/src/main/assets/lessons.json
-`
-2.7. Nội dung file lessons.json
++ Gắn giao diện XML.
++ Khởi tạo View.
++ Đọc dữ liệu ban đầu.
+2.3. Giao diện XML
 
-Dán nội dung này vào lessons.json:
+Android mô tả giao diện bằng file XML trong:
+`
+res/layout
+`
+Ví dụ:
+```
+<LinearLayout
+    android:orientation="vertical">
+
+    <TextView/>
+
+    <Button/>
+
+</LinearLayout>
+LinearLayout
+android:orientation="vertical"
+```
+Các đối tượng nằm theo chiều dọc.
+```
+android:orientation="horizontal"
+```
+Các đối tượng nằm theo chiều ngang.
+```
+Gravity
+android:gravity="center"
+```
+Căn giữa nội dung.
+
+<img width="1337" height="680" alt="image" src="https://github.com/user-attachments/assets/bb1b7f32-b383-4009-8929-61745bbce945" />
+
+2.4. Resource và Strings
+
+Không nên hardcode:
+`
+txtTitle.setText("Hướng dẫn Java");
+`
+Nên lưu trong:
+`
+res/values/strings.xml
+`
+Ví dụ:
+```
+<string name="app_title">
+    Hướng dẫn học Java cơ bản
+</string>
+```
+Tham chiếu:
+
+XML:
+`
+@string/app_title
+`
+Java:
+`
+R.string.app_title`
+Ưu điểm
++ Dễ sửa đổi.
++ Hỗ trợ đa ngôn ngữ.
++ Hỗ trợ Theme.
++ Tránh lặp dữ liệu.
+
+Android tự động lấy resource phù hợp theo:
+
++ Language
++ Location
++ Theme
+
+Ví dụ:
+`
+values/
+values-en/
+values-night/
+`
+Nhờ đó cùng một ứng dụng có thể tự đổi ngôn ngữ và giao diện sáng/tối theo điện thoại người dùng.
+
+<img width="914" height="178" alt="image" src="https://github.com/user-attachments/assets/6d4f6b64-a592-4b9e-84f7-91c155f3bec0" />
+
+2.5. Code tương tác với Layout
+
+Ánh xạ View:
+```
+TextView txtContent =
+        findViewById(R.id.txtContent);
+```
+Hiển thị dữ liệu:
+```
+txtContent.setText(
+        getString(R.string.app_title)
+);
+```
+Sử dụng `getString()` thay vì text hardcode để hỗ trợ Language và Theme.
+
+2.6. Event (Sự kiện)
+
+Ví dụ người dùng bấm Button.
+```
+Cách 1: setOnClickListener
+btnReload.setOnClickListener(v -> {
+    loadData();
+});```
+Cách 2: android:onClick
+
+XML:
+```
+<Button
+    android:onClick="reloadData"/>
+```
+Java:
+```
+public void reloadData(View view){
+    loadData();
+}
+```
+Để xử lý event:
+
++ Layout cần khai báo Button.
++ Java viết hàm xử lý tương ứng.
+2.7. Sử dụng Assets
+
+Assets là thư mục chứa các file đi kèm ứng dụng.
+
+Ví dụ:
+
+assets/
+├── lessons.json
+├── guide.html
+├── image.png
+
+Khi build APK:
+
+Assets
+↓
+Đóng gói vào APK
+↓
+Có thể sử dụng Offline
+Truy cập file Assets
+InputStream inputStream =
+        getAssets().open("lessons.json");
+
+Ý nghĩa:
+
+`getAssets()` lấy AssetManager.
+`open()` mở file trong Assets.
+Lợi ích
++ Không cần Internet.
++ Dữ liệu luôn có sẵn.
++ Truy cập nhanh.
+<img width="479" height="625" alt="image" src="https://github.com/user-attachments/assets/41ab484c-9a30-4664-a6bf-bec35039e13b" />
+
+2.8. APP1: Hướng dẫn học Java Offline
+Ý tưởng
+
+Xây dựng ứng dụng hướng dẫn học Java cơ bản.
+
+Dữ liệu lưu trong:
+`
+assets/lessons.json
+`
+Định dạng:
 ```
 [
   {
-    "title": "Bài 1: Biến trong Java",
-    "content": "Biến là vùng nhớ dùng để lưu trữ dữ liệu. Ví dụ: int age = 20;"
-  },
-  {
-    "title": "Bài 2: Câu lệnh if else",
-    "content": "Câu lệnh if else dùng để rẽ nhánh chương trình dựa trên điều kiện đúng hoặc sai."
-  },
-  {
-    "title": "Bài 3: Vòng lặp for",
-    "content": "Vòng lặp for dùng để lặp lại một đoạn lệnh nhiều lần. Ví dụ: for(int i = 0; i < 5; i++)."
-  },
-  {
-    "title": "Bài 4: Hàm trong Java",
-    "content": "Hàm giúp chia chương trình thành các phần nhỏ, dễ đọc, dễ sửa và dễ tái sử dụng."
+    "title":"Bài 1",
+    "content":"..."
   }
 ]
 ```
+Đặc thù dữ liệu
+
+Dữ liệu dạng:
+
+JSON Array
+    └── JSON Object
+
+Mỗi bài học gồm:
+
+title
+content
+Thuật toán xử lý
+Đọc lessons.json
+↓
+Chuyển thành JSONArray
+↓
+Duyệt từng bài học
+↓
+Lấy title và content
+↓
+Ghép nội dung hiển thị
+↓
+Hiển thị lên TextView
+Đối tượng hiển thị
+
+Sử dụng:
+
+TextView
+
+để hiển thị nội dung.
+
+Do dữ liệu dài nên đặt trong:
+
+ScrollView
+
+để hỗ trợ cuộn.
+
+<img width="1347" height="709" alt="image" src="https://github.com/user-attachments/assets/d7800cdd-0154-460e-909b-c8d001dfe098" />
+
+Kết quả chạy trên điện thoại
+
+<img width="320" height="595" alt="image" src="https://github.com/user-attachments/assets/fb5046ba-f3d7-4db5-9d10-f6215c9cc7ad" />
+
+<img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/771befc1-a094-4cce-a165-e0d96381f951" />
+
 
