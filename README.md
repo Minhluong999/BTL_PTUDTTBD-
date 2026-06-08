@@ -1111,9 +1111,9 @@ webView.loadUrl(url);
 - `setJavaScriptEnabled(true)` cho phép trang web chạy JavaScript.
 - `setWebViewClient()` giúp trang web mở trong app, không bật trình duyệt ngoài.
 
-**CHÈN ẢNH: Giao diện Activity3 WebView**
+<img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/c21b5627-98f6-4d8a-bc90-a94d7fe06f06" />
 
-**CHÈN ẢNH: WebView hiển thị kết quả theo mã sinh viên**
+<img width="1366" height="604" alt="image" src="https://github.com/user-attachments/assets/26ea9fce-338a-49ae-9aa4-3d635ed98488" />
 
 ---
 
