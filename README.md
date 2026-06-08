@@ -386,4 +386,43 @@ Quét QR code để chạy thử.
 <img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/0be8014c-4b2e-42b2-9f52-d5dd0e044480" />
 <img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/32d1debf-192e-434a-a56d-f5d6131d99dd" />
 
-PHẦN 2: ANDROID STUDIO APP1 DÙNG ASSETS
+## PHẦN 2: ANDROID STUDIO APP1 DÙNG ASSETS
+### 2.1. Ý tưởng APP1
+
+Ta làm app tên:
+`
+JavaGuideAssets
+`
+Chức năng:
+
+App hướng dẫn học Java cơ bản offline
+
+Dữ liệu được chuẩn bị trước trong thư mục:
+`
+app/src/main/assets/
+`
+Dữ liệu dạng JSON:
+`
+lessons.json
+`
+App đọc file JSON từ Assets, xử lý dữ liệu và hiển thị lên màn hình.
+
+Android xem resources là các file/tài nguyên tĩnh dùng bởi code như chuỗi giao diện, bitmap, layout, animation…; còn thư mục Assets phù hợp khi muốn đóng gói file dữ liệu nguyên bản và tự đọc bằng code.
+### 2.2. Tạo project Android Studio
+
+Mở Android Studio:
+`
+New Project
+`
+Chọn:
+`
+Empty Views Activity
+`
+Không chọn Jetpack Compose để dễ làm bằng XML + Java.
+
+Cấu hình:
+```
+Name: JavaGuideAssets
+Language: Java
+Minimum SDK: API 23 hoặc cao hơn
+```
