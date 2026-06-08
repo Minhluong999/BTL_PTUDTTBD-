@@ -1,3 +1,9 @@
+# MÔN HỌC: PHÁT TRIỂN ỨNG DỤNG TRÊN THIẾT BỊ DI ĐỘNG - TEE0419
+## Họ & tên : Lăng Nguyễn Minh Lượng
+## MSSV : K225480106044
+
+---
+
 ## PHẦN 1: LÀM APP BẰNG MIT APP INVENTOR
 ### 1.1. Tạo project MIT App Inventor
 
