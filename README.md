@@ -295,3 +295,73 @@ do open another screen screenName "Screen1"
 
 <img width="882" height="436" alt="image" src="https://github.com/user-attachments/assets/ea9a3a79-11e3-4f5d-900c-2963451ccdda" />
 
+1.7. Làm Screen3: WebViewer
+
+Screen3 dùng để hiển thị web.
+
+Trang cần mở:
+
+https://k58kmt.tdh.io.vn?masv=K225480106044
+
+Giao diện Screen3
+
+Cần các thành phần:
+
+Thành phần	Tên	Công dụng
+VerticalArrangement	Layout_Web	Gom giao diện
+Label	lblWebTitle	Tiêu đề
+WebViewer	webViewer	Hiển thị trang web
+Button	btnBack	Quay lại
+Kéo thả Screen3
+
+Vào Screen3 → Designer.
+
+Kéo:
+```
+Layout → VerticalArrangement
+Label
+User Interface → WebViewer
+Button
+```
+Đổi tên:
+```
+Label1 → lblWebTitle
+WebViewer1 → webViewer
+Button1 → btnBack
+```
+Chỉnh thuộc tính:
+
+lblWebTitle
+```
+Text: WEBVIEW
+FontSize: 20
+FontBold: true
+TextAlignment: Center
+Width: Fill parent
+```
+webViewer
+```
+HomeUrl: https://k58kmt.tdh.io.vn?masv=K225480106059
+Width: Fill parent
+Height: Fill parent
+```
+btnBack
+```
+Text: Quay lại
+Width: Fill parent
+```
+MIT App Inventor có tài liệu riêng về các thành phần giao diện như Label, Button, TextBox, WebViewer và cách điều khiển thuộc tính bằng block trong phần Component Documentation.
+
+Block Screen3
+
+Khi mở Screen3, cho WebViewer truy cập URL.
+```
+when Screen3.Initialize
+do call webViewer.GoToUrl
+   url "https://k58kmt.tdh.io.vn?masv=K225480106059"
+```
+Nút quay lại:
+```
+when btnBack.Click
+do close screen
+```
