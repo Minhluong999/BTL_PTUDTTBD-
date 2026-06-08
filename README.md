@@ -426,3 +426,129 @@ Name: JavaGuideAssets
 Language: Java
 Minimum SDK: API 23 hoặc cao hơn
 ```
+### 2.3. Cấu trúc project cần có
+
+Sau khi làm xong, project nên có cấu trúc:
+```
+JavaGuideAssets/
+└── app/
+    └── src/
+        └── main/
+            ├── AndroidManifest.xml
+            ├── assets/
+            │   └── lessons.json
+            ├── java/
+            │   └── com/example/javaguideassets/
+            │       └── MainActivity.java
+            └── res/
+                ├── layout/
+                │   └── activity_main.xml
+                └── values/
+                    └── strings.xml
+```
+2.4. AndroidManifest.xml mô tả gì?
+
+File:
+```
+app/src/main/AndroidManifest.xml
+```
+là file cấu hình chính của ứng dụng Android. Nó mô tả các thành phần của app như Activity, service, receiver, tên app, theme, icon, quyền truy cập và Activity khởi động đầu tiên. Theo tài liệu Android, manifest dùng để khai báo thông tin thiết yếu của app cho hệ thống Android biết trước khi chạy app.
+Ví dụ `AndroidManifest.xml` cho APP1:
+```
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.JavaGuideAssets"
+        android:supportsRtl="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+    </application>
+
+</manifest>
+```
+Trong APP1 này không cần Internet, nên chưa cần khai báo quyền.
+
+Nếu app cần Internet, ví dụ gọi API hoặc WebView, khai báo thêm:
+```
+<uses-permission android:name="android.permission.INTERNET" />
+```
+Thẻ `<uses-permission>` dùng để khai báo quyền hệ thống mà app cần sử dụng.
+2.5. Vòng đời Activity và vì sao có `onCreate()`
+Một màn hình trong Android thường là một `Activity`. `Activity` có vòng đời gồm các hàm chính:
+| Hàm           | Ý nghĩa                     |
+| ------------- | --------------------------- |
+| `onCreate()`  | Activity được tạo lần đầu   |
+| `onStart()`   | Activity bắt đầu hiển thị   |
+| `onResume()`  | Activity sẵn sàng tương tác |
+| `onPause()`   | Activity tạm dừng           |
+| `onStop()`    | Activity không còn hiển thị |
+| `onDestroy()` | Activity bị hủy             |
+
+Android gọi onCreate() khi hệ thống tạo Activity lần đầu. Đây là nơi thực hiện logic khởi tạo ban đầu, ví dụ gắn layout XML bằng setContentView(), ánh xạ TextView, Button, đọc dữ liệu ban đầu.
+
+Ví dụ:
+```
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+}
+```
+2.6. Tạo thư mục Assets
+
+Trong Android Studio, mở cây thư mục:
+```
+app → src → main
+```
+Chuột phải vào main:
+`
+New → Directory
+`
+Đặt tên:
+`
+assets
+`
+Sau đó tạo file:
+`
+lessons.json
+`
+Đường dẫn đầy đủ:
+`
+app/src/main/assets/lessons.json
+`
+2.7. Nội dung file lessons.json
+
+Dán nội dung này vào lessons.json:
+```
+[
+  {
+    "title": "Bài 1: Biến trong Java",
+    "content": "Biến là vùng nhớ dùng để lưu trữ dữ liệu. Ví dụ: int age = 20;"
+  },
+  {
+    "title": "Bài 2: Câu lệnh if else",
+    "content": "Câu lệnh if else dùng để rẽ nhánh chương trình dựa trên điều kiện đúng hoặc sai."
+  },
+  {
+    "title": "Bài 3: Vòng lặp for",
+    "content": "Vòng lặp for dùng để lặp lại một đoạn lệnh nhiều lần. Ví dụ: for(int i = 0; i < 5; i++)."
+  },
+  {
+    "title": "Bài 4: Hàm trong Java",
+    "content": "Hàm giúp chia chương trình thành các phần nhỏ, dễ đọc, dễ sửa và dễ tái sử dụng."
+  }
+]
+```
