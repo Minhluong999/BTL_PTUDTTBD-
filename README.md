@@ -756,3 +756,369 @@ Kết quả chạy trên điện thoại
 <img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/d1a114ab-a307-489a-9ada-3bc01f7b9f67" />
 
 
+
+
+
+
+
+
+
+
+
+
+
+# PHẦN 3: APP2 ANDROID STUDIO - ỨNG DỤNG 3 ACTIVITY
+
+## 3.1. Mục tiêu APP2
+
+APP2 được xây dựng bằng Android Studio, sử dụng ngôn ngữ Java. Ứng dụng có chức năng tương đương với ứng dụng đã làm trên MIT App Inventor, nhưng được triển khai bằng code Java và giao diện XML.
+
+Ứng dụng gồm 3 Activity:
+
+- Activity1: màn hình About, hiển thị thông tin sinh viên và có nút chuyển sang 2 Activity còn lại.
+- Activity2: giải bài toán đơn giản, sau khi giải xong thì gửi dữ liệu lên API của giảng viên.
+- Activity3: sử dụng WebView để mở trang web theo mã sinh viên.
+
+---
+
+## 3.2. Cấu trúc APP2
+
+Tên project:
+
+```text
+MobileBTLAndroid
+```
+
+Package:
+
+```text
+com.example.mobilebtlandroid
+```
+
+Cấu trúc chính:
+
+```text
+app/
+├── manifests/
+│   └── AndroidManifest.xml
+├── java/
+│   └── com.example.mobilebtlandroid/
+│       ├── MainActivity.java
+│       ├── SolveActivity.java
+│       └── WebActivity.java
+└── res/
+    ├── layout/
+    │   ├── activity_main.xml
+    │   ├── activity_solve.xml
+    │   └── activity_web.xml
+    └── values/
+        └── strings.xml
+```
+
+<img width="1341" height="702" alt="image" src="https://github.com/user-attachments/assets/8ea5e196-f6ad-4147-bfe6-17003e50ba03" />
+
+---
+
+## 3.3. AndroidManifest.xml
+
+File `AndroidManifest.xml` dùng để khai báo các Activity và quyền truy cập Internet cho ứng dụng.
+
+Do APP2 cần gọi API và mở WebView nên cần quyền Internet:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+Khai báo 3 Activity:
+
+```xml
+<activity
+    android:name=".WebActivity"
+    android:exported="false" />
+
+<activity
+    android:name=".SolveActivity"
+    android:exported="false" />
+
+<activity
+    android:name=".MainActivity"
+    android:exported="true">
+
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+
+</activity>
+```
+
+Ý nghĩa:
+
+- `MainActivity` là màn hình khởi động đầu tiên.
+- `SolveActivity` là màn hình giải toán.
+- `WebActivity` là màn hình WebView.
+- Quyền `INTERNET` cho phép app gọi API và truy cập website.
+
+
+---
+
+## 3.4. Activity1 - Màn hình About
+
+Activity1 sử dụng file:
+
+```text
+MainActivity.java
+activity_main.xml
+```
+
+Chức năng:
+
+- Hiển thị thông tin sinh viên.
+- Có nút chuyển sang màn hình giải toán.
+- Có nút chuyển sang màn hình WebView.
+
+Thông tin hiển thị:
+
+```text
+Họ tên: Lăng Nguyễn Minh Lượng
+Mã sinh viên: K225480106044
+Lớp: K58KMT
+Môn học: TEE0419
+```
+
+Code chuyển Activity:
+
+```java
+btnGoSolve.setOnClickListener(v -> {
+    Intent intent = new Intent(MainActivity.this, SolveActivity.class);
+    startActivity(intent);
+});
+
+btnGoWeb.setOnClickListener(v -> {
+    Intent intent = new Intent(MainActivity.this, WebActivity.class);
+    startActivity(intent);
+});
+```
+
+Ý nghĩa:
+
+- Khi bấm nút giải toán, app mở `SolveActivity`.
+- Khi bấm nút WebView, app mở `WebActivity`.
+
+<img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/794030e3-e67c-4604-be33-db9bafecc2cb" />
+
+---
+
+## 3.5. Activity2 - Giải phương trình và gửi API
+
+Activity2 sử dụng file:
+
+```text
+SolveActivity.java
+activity_solve.xml
+```
+
+Bài toán được chọn:
+
+```text
+Giải phương trình bậc nhất: ax + b = 0
+```
+
+Cách xét nghiệm:
+
+```text
+Nếu a = 0 và b = 0  → phương trình có vô số nghiệm
+Nếu a = 0 và b ≠ 0  → phương trình vô nghiệm
+Nếu a ≠ 0           → nghiệm x = -b / a
+```
+
+Công thức:
+
+```text
+x = -b / a
+```
+
+Giao diện Activity2 gồm:
+
+- Ô nhập hệ số `a`.
+- Ô nhập hệ số `b`.
+- Nút giải phương trình và gửi API.
+- Vùng hiển thị kết quả.
+- Nút quay lại.
+
+<img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/430e1074-3a1e-4225-b8df-14c5509d9d46" />
+
+---
+
+## 3.6. Code xử lý giải phương trình
+
+Đoạn code chính:
+
+```java
+double a = Double.parseDouble(strA);
+double b = Double.parseDouble(strB);
+
+String ketLuan;
+double nghiem = 0;
+
+if (a == 0 && b == 0) {
+    ketLuan = "Phương trình có vô số nghiệm";
+} else if (a == 0) {
+    ketLuan = "Phương trình vô nghiệm";
+} else {
+    nghiem = -b / a;
+    ketLuan = "Phương trình có nghiệm x = " + nghiem;
+}
+```
+
+Ví dụ nhập:
+
+```text
+a = 1
+b = 2
+```
+
+Kết quả:
+
+```text
+x = -2
+```
+
+<img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/1ae25f3f-1d35-4749-8d3b-17cbdec5fd44" />
+
+
+---
+
+## 3.7. Gửi dữ liệu lên API
+
+Sau khi giải xong bài toán, ứng dụng gửi dữ liệu lên API:
+
+```text
+https://k58kmt.tdh.io.vn/api/
+```
+
+Dữ liệu gửi lên có dạng JSON:
+
+```json
+{
+  "app_by": "K225480106044",
+  "input": {
+    "a": 1,
+    "b": 2,
+    "c": 0,
+    "name": "hello tắc kè"
+  },
+  "output": {
+    "ketluan": "Phương trình có nghiệm x = -2.0",
+    "abc": "xyz",
+    "nghiem": -2.0
+  }
+}
+```
+
+Code tạo JSON:
+
+```java
+JSONObject input = new JSONObject();
+input.put("a", a);
+input.put("b", b);
+input.put("c", 0);
+input.put("name", "hello tắc kè");
+
+JSONObject output = new JSONObject();
+output.put("ketluan", ketLuan);
+output.put("abc", "xyz");
+output.put("nghiem", nghiem);
+
+JSONObject data = new JSONObject();
+data.put("app_by", STUDENT_ID);
+data.put("input", input);
+data.put("output", output);
+```
+
+Code gửi API sử dụng `HttpURLConnection`:
+
+```java
+URL url = new URL(API_URL);
+HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+conn.setRequestMethod("POST");
+conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+conn.setRequestProperty("Accept", "application/json");
+conn.setDoOutput(true);
+
+OutputStream os = conn.getOutputStream();
+os.write(data.toString().getBytes(StandardCharsets.UTF_8));
+os.close();
+```
+
+API trả về JSON dạng:
+
+```json
+{
+  "ok": 1,
+  "stt": 1234
+}
+```
+
+Kết quả thực tế đã gửi thành công lên link của giảng viên.
+
+
+<img width="271" height="600" alt="image" src="https://github.com/user-attachments/assets/61fdc32d-702d-4174-99f6-a2a88795b6c0" />
+
+
+<img width="1360" height="768" alt="image" src="https://github.com/user-attachments/assets/b9ede0a8-b96a-46a1-b2ff-a74954fd94f4" />
+
+
+---
+
+## 3.8. Activity3 - WebView
+
+Activity3 sử dụng file:
+
+```text
+WebActivity.java
+activity_web.xml
+```
+
+Chức năng:
+
+- Mở trang web của giảng viên bằng WebView.
+- Truyền mã sinh viên qua URL.
+
+URL sử dụng:
+
+```text
+https://k58kmt.tdh.io.vn/?masv=K225480106044
+```
+
+Code WebView:
+
+```java
+WebSettings settings = webView.getSettings();
+settings.setJavaScriptEnabled(true);
+settings.setDomStorageEnabled(true);
+
+webView.setWebViewClient(new WebViewClient());
+
+String url = "https://k58kmt.tdh.io.vn/?masv=" + STUDENT_ID;
+webView.loadUrl(url);
+```
+
+Ý nghĩa:
+
+- `WebView` hiển thị trang web trực tiếp trong ứng dụng.
+- `setJavaScriptEnabled(true)` cho phép trang web chạy JavaScript.
+- `setWebViewClient()` giúp trang web mở trong app, không bật trình duyệt ngoài.
+
+**CHÈN ẢNH: Giao diện Activity3 WebView**
+
+**CHÈN ẢNH: WebView hiển thị kết quả theo mã sinh viên**
+
+---
+
+
+
+## 3.11. Kết luận APP2
+
+APP2 đã triển khai lại các chức năng tương đương với ứng dụng MIT App Inventor bằng Android Studio Java. Ứng dụng có 3 Activity, xử lý được sự kiện người dùng, giải bài toán đơn giản, gửi dữ liệu lên API của giảng viên và hiển thị trang web bằng WebView. Qua đó, sinh viên hiểu rõ hơn cách xây dựng ứng dụng Android bằng Java, cách tổ chức layout XML, cách chuyển Activity, cách gọi API và cách sử dụng WebView trong Android.
