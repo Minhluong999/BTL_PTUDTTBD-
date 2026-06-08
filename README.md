@@ -352,6 +352,8 @@ Width: Fill parent
 ```
 MIT App Inventor có tài liệu riêng về các thành phần giao diện như Label, Button, TextBox, WebViewer và cách điều khiển thuộc tính bằng block trong phần Component Documentation.
 
+<img width="1365" height="720" alt="image" src="https://github.com/user-attachments/assets/47850d90-1c1d-440d-addc-6b9dddde57ad" />
+
 Block Screen3
 
 Khi mở Screen3, cho WebViewer truy cập URL.
@@ -365,3 +367,23 @@ Nút quay lại:
 when btnBack.Click
 do close screen
 ```
+
+<img width="674" height="292" alt="image" src="https://github.com/user-attachments/assets/903ee0d8-5cf0-4f26-b193-1539b87d4342" />
+
+1.8. Test app MIT App Inventor
+
+Trên thanh công cụ chọn:
+
+Connect → AI Companion
+
+Trên điện thoại cài app:
+`
+MIT AI2 Companion
+`
+Quét QR code để chạy thử.
+<img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/c2b54d26-04e6-410f-a225-d234562f83af" />
+<img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/8e8b4be9-7d9a-4433-87ef-d9ac960a419f" />
+<img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/0be8014c-4b2e-42b2-9f52-d5dd0e044480" />
+<img width="1260" height="2800" alt="image" src="https://github.com/user-attachments/assets/32d1debf-192e-434a-a56d-f5d6131d99dd" />
+
+PHẦN 2: ANDROID STUDIO APP1 DÙNG ASSETS
