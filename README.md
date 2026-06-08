@@ -553,5 +553,3 @@ Dán nội dung này vào lessons.json:
 ]
 ```
 
-tạo máy ảo
-<img width="963" height="713" alt="image" src="https://github.com/user-attachments/assets/9b5d6b7e-255e-4116-b090-8da8da82f92e" />
